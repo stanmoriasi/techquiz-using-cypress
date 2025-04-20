@@ -2,20 +2,30 @@ import Quiz from "../../client/src/components/Quiz";
  // Adjust the import based on your setup
 
 
-describe('<Quiz />', () => {
+ describe("<Quiz />", () => {
     beforeEach(() => {
-        cy.intercept('GET', '/api/questions', { fixture: 'questions.json' }).as('getQuestions');
+      cy.wait(500);
+      cy.mount(<Quiz />);
     });
-    
-    it('displays the quiz title', () => {
-        cy.mount(<Quiz />);
-        cy.contains('Start Quiz').click();
+  
+    it("should display the start quiz button", () => {
+      cy.contains("Start Quiz").should("exist");
     });
-    it('displays quiz is over', () => {
-        cy.mount(<Quiz />);
-        cy.contains('Quiz Completed');
-        cy.contains('div', 'Quiz Completed').click();
-
+  
+    it("should start the quiz when start button is clicked", () => {
+      cy.contains("Start Quiz").click();
+  
+      cy.get(".card").should("be.visible");
+      cy.get("h2").should("exist");
     });
- 
-})
+  
+    it("should see the multiple choice answers", () => {
+      cy.findByRole("button", { name: "Start Quiz" }).click();
+      cy.get(".card button").should("exist");
+    });
+  
+    it("should be able to click on the answer button 1-4", () => {
+      cy.findByRole("button", { name: "Start Quiz" }).click();
+      cy.get(".btn-primary").first().click();
+    });
+  });
