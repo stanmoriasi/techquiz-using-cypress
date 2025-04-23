@@ -30,7 +30,7 @@
   To contribute to this project, please create a pull request
 
   ## Tests
-  None
+  `npm run test` or `npm run cypress`
 
   ## GitHub Profile
   https://github.com/stanmoriasi
